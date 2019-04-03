@@ -57,3 +57,6 @@ user: {
 put index on city
 
 define stats...
+
+
+pick set of ~100 repos in 2 canadian cities
