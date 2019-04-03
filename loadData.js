@@ -1,6 +1,7 @@
 const axios = require('axios')
 const R = require('ramda')
 const MongoClient = require('mongodb').MongoClient
+const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
@@ -37,7 +38,10 @@ const getUserRepoDetails = username => {
         Authorization: `bearer ${process.env.token}`
       }
     }
-  )
+  ).then(response => {
+    assert.equal(response.status, 200)
+    return response.data
+  })
 }
 
 const repoReducer = (acc, repo) => {

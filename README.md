@@ -13,6 +13,7 @@ Load data
 ---------
 
 Login to github; goto settings; generate a personal access token.
+Pass the token as environment variable token:
 
     token=XXX node load_data.js
 
