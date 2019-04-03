@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/lj-ditrapani/dev-explorer/issues"
   },
-  "homepage": "https://github.com/lj-ditrapani/dev-explorer#readme"
+  "homepage": "https://github.com/lj-ditrapani/dev-explorer#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4"
+  }
 }
