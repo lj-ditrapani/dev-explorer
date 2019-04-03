@@ -4,6 +4,7 @@ Setup
 
     docker pull mongo:4.1.9-bionic
     npm install
+    docker run --rm --name mongo-9k -v /$HOME/mongo-9k:/data/db -d mongo:4.1.9-bionic
 
 Run
     
