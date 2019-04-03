@@ -42,6 +42,25 @@ Fix your crappy formatting
     npm run fmt
 
 
+Response Format
+---------------
+
+```
+{
+    users: {
+        bill: {langs},
+        dave: {langs},
+        ...
+    }
+    cities: {
+        montreal: {langs},
+        toronto: {langs},
+        ...
+    }
+}
+```
+
+
 Ideas
 -----
 
