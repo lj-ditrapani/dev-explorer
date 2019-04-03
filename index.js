@@ -16,7 +16,6 @@ MongoClient.connect(url, (err, client) => {
 
 const setup = client => {
   const db = client.db(dbName)
-  app.get('/', (req, res) => 
-    res.sendFile(__dirname +'/views/index.html'))
+  app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'))
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
