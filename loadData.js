@@ -5,15 +5,19 @@ const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
+const usernames = require('./users.json')
 
 const getUserRepoDetails = username => {
-  return axios.post(
-    'https://api.github.com/graphql',
-    {
-      query: `query {
-	user(login: ${username}){
+  return axios
+    .post(
+      'https://api.github.com/graphql',
+      {
+        query: `query {
+	user(login: "${username}"){
+    avatarUrl
     login
     location
+    url
     repositories(last: 100){
       nodes{
         name
@@ -31,17 +35,18 @@ const getUserRepoDetails = username => {
     }
   }
 }`
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${process.env.token}`
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `bearer ${process.env.token}`
+        }
       }
-    }
-  ).then(response => {
-    assert.equal(response.status, 200)
-    return response.data
-  })
+    )
+    .then(response => {
+      assert.equal(response.status, 200)
+      return response.data
+    })
 }
 
 const repoReducer = (acc, repo) => {
@@ -78,8 +83,20 @@ MongoClient.connect(url).then(client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
   const users = db.collection('users')
-  getUserRepoDetails('billwu99')
-    .then(user => addUser(user, users))
-    .then(() => showUsers(users))
-    .then(() => client.close())
+  generateUserData(usernames.users, users)
+  .then(() => showUsers(users))
+  .then(() => client.close())
 })
+
+const generateUserData = (usernames, users) => {
+    if(usernames.length === 0){
+        return
+    }
+    else {
+        const username = usernames.pop()
+        return getUserRepoDetails(username).then(
+            user => addUser(user, users)).then(() =>
+                generateUserData(usernames, users)
+            )
+    }
+}
