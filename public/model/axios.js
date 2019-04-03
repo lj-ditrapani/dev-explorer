@@ -1,12 +1,12 @@
 const axios = require('axios')
-
+var fs = require('fs');
 // const user = 'billwu99'
 let data;
 
 let person = {
     login : '',
     avatar: '',
-    repos : [],
+    // repos : [],
     location : null
 }
 let state = []
@@ -28,6 +28,9 @@ axios.get(`https://api.github.com/users`)
                 }
             })) 
         )
+        fs.readFile('users.json', () => {
+            console.log('stuff written')
+        })
     })
     .catch(err => {
         console.log(err)
