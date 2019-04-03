@@ -34,3 +34,18 @@ Mabe
     weekly.js: Update DB with this week's (or past week) stats
     index.js: actually run express server (readonly)
               queries mongodb
+
+Can use github username as document key?
+
+users collection
+user: {
+    _id: num
+    name: string, // github username
+    city: string,
+    languages: { java: bytes, python: bytes, ... },
+    weekly: [{stats}, {stats}, {stats}, ...],
+}
+
+put index on city
+
+define stats...
