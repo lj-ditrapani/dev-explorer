@@ -8,7 +8,7 @@ const getUserRepoDetails = username => {
 	user(login: ${username}){
     login
     location
-    repositories(first: 100){
+    repositories(last: 100){
       nodes{
         name
         languages(last:5){
