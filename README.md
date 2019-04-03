@@ -17,6 +17,14 @@ Run
 Go to localhost:3000 in browser
 
 
+Dev
+---
+    
+    npm run dev
+
+Go to localhost:3000 in browser
+
+
 Formatting
 ----------
 
