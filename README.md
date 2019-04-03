@@ -12,4 +12,6 @@ Run
 
 Go to localhost:3000 in browser
 
+Fix your crappy formatting
 
+    npm run fmt
