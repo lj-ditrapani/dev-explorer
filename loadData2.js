@@ -4,32 +4,34 @@ const assert = require('assert')
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
 
-const work = client => {
-  const db = client.db(dbName)
-  const collection = db.collection('users')
-  collection
-    .insertMany([{ a: 1 }, { a: 2 }, { a: 3 }])
-    .then(result => {
-      assert.equal(3, result.result.n)
-      assert.equal(3, result.ops.length)
-      console.log('Inserted 3 documents into the collection')
-      return collection.find({}).toArray()
-    })
-    .then(docs => {
-      console.log('Found the following records')
-      console.log(docs)
-      return collection.find({ a: 3 }).toArray()
-    })
-    .then(docs => {
-      console.log('Found the following records')
-      console.log(docs)
-      client.close()
-    })
+const user = require('./test_data/userData')
+
+const transformUser = user => {
+  const rawUser = user.data.user
+  const repos = user.repositories
+  return {
+    login: rawUser.login,
+    location: rawUser.location
+  }
 }
+
+const addUser = (user, users) => {
+  const newUser = transformUser(user)
+  return users.insert(newUser)
+}
+
+const showUsers = users =>
+  users.find({}).toArray().then(docs => {
+    console.log('Found the following records')
+    console.log(docs)
+  })
 
 MongoClient.connect(url)
   .then(client => {
     console.log('Connected to mongodb')
-    return client
+    const db = client.db(dbName)
+    const users = db.collection('users')
+    addUser(user, users)
+      .then(() => showUsers(users))
+      .then(() => client.close())
   })
-  .then(work)
