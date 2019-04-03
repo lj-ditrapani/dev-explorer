@@ -1,6 +1,7 @@
 const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
+const path = require('path');
 
 const app = express()
 const port = 3000
@@ -14,8 +15,15 @@ MongoClient.connect(url, (err, client) => {
   setup(client)
 })
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+
+
 const setup = client => {
   const db = client.db(dbName)
-  app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'))
+  app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
