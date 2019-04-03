@@ -47,7 +47,7 @@ const getUserRepoDetails = username => {
 const repoReducer = (acc, repo) => {
   const names = repo.languages.nodes.map(n => n.name)
   const sizes = repo.languages.edges.map(e => e.size)
-  return R.zipObj(names, sizes)
+  return R.mergeWith((a, b) => a + b, acc, R.zipObj(names, sizes))
 }
 
 const transformUser = user => {
