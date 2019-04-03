@@ -11,7 +11,7 @@ const getUserRepoDetails = username => {
     repositories(last: 100){
       nodes{
         name
-        languages(last:5){
+        languages(last:100){
           totalCount
           totalSize
           nodes{
