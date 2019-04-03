@@ -9,6 +9,14 @@ Setup
     docker run --rm -p 27017:27017 --name mongo-9k -v $HOME/mongo-9k:/data/db -d mongo:4.1.9-bionic
 
 
+Load data
+---------
+
+Login to github; goto settings; generate a personal access token.
+
+    token=XXX node load_data.js
+
+
 Run
 ---
     
