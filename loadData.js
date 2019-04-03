@@ -1,18 +1,12 @@
 const axios = require('axios')
 
-export const getUserRepoDetails = (username) => {
-axios
-  .post(
+const getUserRepoDetails = username => {
+  return axios.post(
     'https://api.github.com/graphql',
     {
       query: `query {
-  rateLimit{
-    limit
-    cost
-    remaining
-    resetAt
-  }
 	user(login: ${username}){
+    login
     location
     repositories(first: 100){
       nodes{
@@ -39,10 +33,6 @@ axios
       }
     }
   )
-  .then(res => {
-    console.log('success: ', JSON.stringify(res.data, null, 2))
-  })
-  .catch(err => {
-    console.log('error: ', err)
-  })
 }
+
+module.exports = getUserRepoDetails
