@@ -1,0 +1,26 @@
+{
+  "name": "dev-explorer",
+  "version": "1.0.0",
+  "description": "Evoke 2019 DisruptAI 9k",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lj-ditrapani/dev-explorer.git"
+  },
+  "keywords": [
+    "github",
+    "language",
+    "ranking",
+    "devoper",
+    "profiles"
+  ],
+  "author": "innosquad3 9k",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lj-ditrapani/dev-explorer/issues"
+  },
+  "homepage": "https://github.com/lj-ditrapani/dev-explorer#readme"
+}
