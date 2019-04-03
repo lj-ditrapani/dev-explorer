@@ -8,5 +8,4 @@ REST V3 API FROM github
 all Users: https://api.github.com/users
 all Repos: https://api.github.com/users/${username}/repos
 language in each repo:
-    https://api.github.com/repos/${username}/${reponame}.github.io/languages
-    
+    https://api.github.com/repos/${username}/${reponame}/languages
