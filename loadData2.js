@@ -1,3 +1,4 @@
+const R = require('ramda')
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
 
@@ -6,12 +7,19 @@ const dbName = 'devexplorer'
 
 const user = require('./test_data/userData')
 
+const repoReducer = (acc, repo) => {
+  const names = repo.languages.nodes.map(n => n.name)
+  const sizes = repo.languages.edges.map(e => e.size)
+  return R.zipObj(names, sizes)
+}
+
 const transformUser = user => {
   const rawUser = user.data.user
-  const repos = user.repositories
+  const languages = rawUser.repositories.nodes.reduce(repoReducer, {})
   return {
     login: rawUser.login,
-    location: rawUser.location
+    location: rawUser.location,
+    languages
   }
 }
 
