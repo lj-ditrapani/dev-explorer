@@ -26,6 +26,7 @@
   "homepage": "https://github.com/lj-ditrapani/dev-explorer#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongodb": "^3.2.2"
   }
 }
