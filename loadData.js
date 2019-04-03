@@ -1,5 +1,6 @@
 const axios = require('axios')
 
+export const getUserRepoDetails = (username) => {
 axios
   .post(
     'https://api.github.com/graphql',
@@ -11,7 +12,7 @@ axios
     remaining
     resetAt
   }
-	viewer{
+	user(login: ${username}){
     location
     repositories(first: 100){
       nodes{
@@ -44,3 +45,4 @@ axios
   .catch(err => {
     console.log('error: ', err)
   })
+}
