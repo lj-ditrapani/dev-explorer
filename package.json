@@ -4,7 +4,7 @@
   "description": "Evoke 2019 DisruptAI 9k",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "fmt": "prettier --write \"*.js\" \"*.json\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,6 +31,7 @@
     "mongodb": "^3.2.2"
   },
   "devDependencies": {
+    "nodemon": "^1.18.10",
     "prettier": "^1.16.4"
   }
 }
