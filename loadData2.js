@@ -29,17 +29,19 @@ const addUser = (user, users) => {
 }
 
 const showUsers = users =>
-  users.find({}).toArray().then(docs => {
-    console.log('Found the following records')
-    console.log(docs)
-  })
+  users
+    .find({})
+    .toArray()
+    .then(docs => {
+      console.log('Found the following records')
+      console.log(docs)
+    })
 
-MongoClient.connect(url)
-  .then(client => {
-    console.log('Connected to mongodb')
-    const db = client.db(dbName)
-    const users = db.collection('users')
-    addUser(user, users)
-      .then(() => showUsers(users))
-      .then(() => client.close())
-  })
+MongoClient.connect(url).then(client => {
+  console.log('Connected to mongodb')
+  const db = client.db(dbName)
+  const users = db.collection('users')
+  addUser(user, users)
+    .then(() => showUsers(users))
+    .then(() => client.close())
+})
