@@ -18,12 +18,15 @@ MongoClient.connect(url, (err, client) => {
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-
-
 const setup = client => {
   const db = client.db(dbName)
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
+  app.get('/data', getData)
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+}
+
+const getData = (req, res) => {
+  res.send('No you!')
 }
