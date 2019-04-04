@@ -52,18 +52,22 @@ const getUserRepoDetails = username => {
 const repoReducer = (acc, repo) => {
   const names = repo.languages.nodes.map(n => n.name)
   const sizes = repo.languages.edges.map(e => e.size)
-  return R.mergeWith((a, b) => a + b, acc, R.zipObj(names, sizes))
+  return {
+    totalSize: acc.totalSize + repo.languages.totalSize,
+    languages: R.mergeWith((a, b) => a + b, acc.languages, R.zipObj(names, sizes))
+  }
 }
 
 const transformUser = user => {
   const rawUser = user.data.user
-  const languages = rawUser.repositories.nodes.reduce(repoReducer, {})
+  const init = { totalSize: 0, languages: {}}
+  const repoData= rawUser.repositories.nodes.reduce(repoReducer, init)
   return {
     avatarUrl: rawUser.avatarUrl,
     login: rawUser.login,
     location: rawUser.location,
-    languages,
-    url: rawUser.url
+    url: rawUser.url,
+    ...repoData
   }
 }
 
