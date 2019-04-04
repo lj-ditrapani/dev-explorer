@@ -35,7 +35,7 @@ const getCities = cities => (req, res) => {
         numUsers: r.numUsers,
         totalSize: 0
       }))
-      res.send({cities: cityData})
+      res.send({ cities: cityData })
     })
 }
 
@@ -44,7 +44,8 @@ const getUsers = users => (req, res) => {
     .find({})
     .toArray()
     .then(results => {
-      res.send(results.map(r => r.login))
+      const userData = results.map(r => r.login)
+      res.send({ users: userData })
     })
 }
 
