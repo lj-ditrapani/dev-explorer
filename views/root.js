@@ -157,14 +157,14 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
           console.log(userDiv)
           const userRows = city.topUsers.map(
             user =>
-              `<tr><td>${user.login}</td><td>${user.totalSize}</td><td>${
+              `<tr><td><img style="width: 125px" src=${user.avatarUrl}></td><td>${user.login}</td><td>${user.totalSize}</td><td>${
                 user.url
               }</td></tr>`
           )
           userDiv
             .empty()
             .append(
-              '<table><tr><th>name</th><th>Bytes</th><th>url</th></tr>' +
+              '<table><tr><th>Image</th><th>name</th><th>Bytes</th><th>url</th></tr>' +
                 userRows.join('\n') +
                 '</table>'
             )
