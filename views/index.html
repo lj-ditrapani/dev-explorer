@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <h1 class='center'>Hello Worlds</h1>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-    </body>
-  </html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+      <nav>
+          <div class="nav-wrapper grey darken-4">
+            <form>
+              <div class="input-field">
+                <input placeholder="Find Cities" id="search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form>
+          </div>
+        </nav>
+
+        <h1 class="center">CITIES WITH MOST USED LANGUAGES</h1>
+        <h4 class="center">Cities That Matters :)</h4>
+
+        <div className="body-ggl">
+            <a name="toronto" className="body-ggl-1" href="#languages" >     
+                  <img src="" ></img>
+                  <h1 className="center" >Toronto</h1>
+            </a> 
+            <a className="body-ggl-2" href="#languages" >     
+                  <img src="" ></img>
+                  <h1 className="center">Vancouver</h1>
+            </a> 
+            <a className="body-ggl-3" href="#languages">     
+                  <img src="" ></img>
+                  <h1 className="center" >Montreal</h1>
+            </a> 
+            <a className="body-ggl-4" href="#languages">     
+                  <h1 className="center" >Yellowknife</h1>
+                  <img  className="body-ggl-4-img" src="https://cdn.europosters.eu/image/1300/posters/chinstrap-penguins-i40502.jpg" ></img>
+            </a> 
+          </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+</html>
