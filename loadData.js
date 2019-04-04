@@ -67,7 +67,7 @@ const transformUser = user => {
 
 const addUser = (user, users) => {
   const newUser = transformUser(user)
-  return users.insert(newUser)
+  return users.insertOne(newUser)
 }
 
 const showUsers = users =>
