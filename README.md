@@ -33,6 +33,10 @@ Dev
 
 Go to localhost:3000 in browser
 
+Drop mongo db database
+
+    node dropdb.js
+
 
 Formatting
 ----------
@@ -52,18 +56,52 @@ Endpoints
 Response Format
 ---------------
 
+/cities
 ```
 {
-    users: {
-        bill: {langs},
-        dave: {langs},
-        ...
-    }
-    cities: {
-        montreal: {langs},
-        toronto: {langs},
-        ...
-    }
+    montreal: {topLang: string, totalSize: num, numUsers: num},
+    toronto: {topLang: string, totalSize: num, numUsers: num}
+    ...
+}
+```
+
+/users
+```
+{
+    users: [login1, login2, ...]
+}
+```
+
+/city/:name
+```
+{
+    location: toronto,
+    laguages: { java: {byteSize: num, numUsers: num},
+    topLanguage: java,
+    numUsers: num,
+    topUsers: [{..userData}, {...userData}, {}]
+}
+```
+
+/user/:name
+```
+{
+    "avatarUrl": "https://avatars3.githubusercontent.com/u/37006818?v=4",
+    "languages": {
+        "Batchfile": 266,
+        "C#": 661617,
+        "C++": 473464,
+        "HTML": 161877,
+        "M": 353,
+        "MATLAB": 124677,
+        "Python": 539344,
+        "QMake": 1087,
+        "Visual Basic": 438954
+    },
+    "location": "Montreal, Canada",
+    "login": "RoboDK",
+    "totalSize": 2401639,
+    "url": "https://github.com/RoboDK"
 }
 ```
 
@@ -71,27 +109,8 @@ Response Format
 Ideas
 -----
 
-Mabe
-
-    all-time.js:  Update DB with all-time stats
-    weekly.js: Update DB with this week's (or past week) stats
+    loadData.js: load data
     index.js: actually run express server (readonly)
               queries mongodb
 
-Can use github username as document key?
-
-users collection
-user: {
-    _id: num
-    name: string, // github username
-    city: string,
-    languages: { java: bytes, python: bytes, ... },
-    weekly: [{stats}, {stats}, {stats}, ...],
-}
-
 put index on city
-
-define stats...
-
-
-pick set of ~100 repos in 2 canadian cities
