@@ -33,7 +33,7 @@ const getCities = cities => (req, res) => {
         location: r.location,
         topLanguage: r.topLanguage,
         numUsers: r.numUsers,
-        totalSize: 0
+        totalSize: r.totalSize
       }))
       res.send({ cities: cityData })
     })

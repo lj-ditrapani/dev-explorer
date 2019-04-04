@@ -131,7 +131,12 @@ const insertCities = cities => cityData => {
     const langTuple = Object.entries(city.languages).sort(
       (a, b) => b[1].numUsers - a[1].numUsers
     )[0]
+    const totalSize = Object.values(city.languages).reduce(
+      (acc, lang) => acc + lang.byteSize,
+      0
+    )
     city.topLanguage = langTuple[0]
+    city.totalSize = totalSize
   })
   return cities.insertMany(Object.values(cityData))
 }
