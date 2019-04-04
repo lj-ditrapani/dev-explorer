@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const fs = require('file-system')
 
 const parseUsers = () => {
-  return (fs.readFileSync('users.json', 'utf8'));
+  return fs.readFileSync('users.json', 'utf8')
 }
 
 arr = []
@@ -16,7 +16,7 @@ console.log(JSON.stringify(json.users))
 if (json !== undefined && json.users !== undefined) {
   json.users.forEach(element => {
     arr.push(JSON.stringify(element))
-  });
+  })
 }
 
 for (let i = 1; i <= 10; i++) {
