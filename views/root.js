@@ -137,7 +137,7 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
       })
       marker.addListener('click', function() {
         getCity(location).done(city => {
-          const d = $(`#${location}`)
+          const cityLangs = $(`#${location}`)
           const rows = Object.entries(city.languages)
             .sort((a, b) => b[1].numUsers - a[1].numUsers)
             .map(
@@ -146,11 +146,28 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
                   entry[1].byteSize
                 }</td></tr>`
             )
-          d.empty().append(
-            '<table><tr><th>language</th><th>Users</th><th>Bytes</th></tr>' +
-              rows.join('\n') +
-              '</table>'
+          cityLangs
+            .empty()
+            .append(
+              '<table><tr><th>language</th><th>Users</th><th>Bytes</th></tr>' +
+                rows.join('\n') +
+                '</table>'
+            )
+          const userDiv = $('#city-users')
+          console.log(userDiv)
+          const userRows = city.topUsers.map(
+            user =>
+              `<tr><td>${user.login}</td><td>${user.totalSize}</td><td>${
+                user.url
+              }</td></tr>`
           )
+          userDiv
+            .empty()
+            .append(
+              '<table><tr><th>name</th><th>Bytes</th><th>url</th></tr>' +
+                userRows.join('\n') +
+                '</table>'
+            )
         })
         infowindow.open(map, marker)
       })
