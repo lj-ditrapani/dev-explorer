@@ -13,17 +13,18 @@ const setup = client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
   const users = db.collection('users')
+  const cities = db.collection('cities')
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'views', 'index.html'))
   })
-  app.get('/cities', getCities(users))
+  app.get('/cities', getCities(cities))
   app.get('/users', getUsers(users))
-  app.get('/city/:name', getCity(users))
+  app.get('/city/:name', getCity(cities))
   app.get('/user/:name', getUser(users))
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
 
-const getCities = users => (req, res) => {
+const getCities = cities => (req, res) => {
   res.send('Cities!')
 }
 
@@ -31,8 +32,18 @@ const getUsers = users => (req, res) => {
   res.send('Users!')
 }
 
-const getCity = users => (req, res) => {
-  res.send('City!')
+const getCity = cities => (req, res) => {
+  const cityName = req.params.name
+  cities
+    .find({ location: cityName })
+    .toArray()
+    .then(results => {
+      if (results.length === 1) {
+        res.send(results[0])
+      } else {
+        res.send({ error: `no city found for ${cityName}` })
+      }
+    })
 }
 
 const getUser = users => (req, res) => {
