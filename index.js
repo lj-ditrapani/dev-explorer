@@ -9,20 +9,12 @@ const port = 3000
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
 
-MongoClient.connect(url, (err, client) => {
-  assert.equal(null, err)
-  console.log('Connected to mongodb')
-  setup(client)
-})
-
-app.use(express.static(path.join(__dirname, 'views')));
-
 const setup = client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
   const users = db.collection('users')
   app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'views', 'index.html'))
   })
   app.get('/cities', getCities(users))
   app.get('/users', getUsers(users))
