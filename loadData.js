@@ -118,10 +118,20 @@ MongoClient.connect(url).then(client => {
   const users = db.collection('users')
   const cities = db.collection('cities')
   generateUserData(usernames.users, users, {})
-    .then(cityData => cities.insertMany(Object.values(cityData)))
+    .then(insertCities(cities))
     .then(() => showUsers(users))
     .then(() => client.close())
 })
+
+const insertCities = cities => cityData => {
+  Object.values(cityData).forEach(city => {
+    const langTuple = Object.entries(city.languages).sort(
+      (a, b) => b[1].numUsers - a[1].numUsers
+    )[0]
+    city.topLanguage = langTuple[0]
+  })
+  return cities.insertMany(Object.values(cityData))
+}
 
 const generateUserData = (usernames, users, cities) => {
   if (usernames.length === 0) {
