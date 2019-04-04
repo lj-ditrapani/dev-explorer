@@ -88,7 +88,10 @@ const updateCities = (user, cities) => {
   if (original === undefined) {
     cities[user.location] = data
   } else {
-    const topUsers = original.topUsers.concat(data.topUsers).slice(0, 10)
+    const topUsers = original.topUsers
+      .concat(data.topUsers)
+      .sort((a, b) => b.totalSize - a.totalSize)
+      .slice(0, 10)
     const langMerge = (a, b) => ({
       byteSize: a.byteSize + b.byteSize,
       numUsers: a.numUsers + b.numUsers
