@@ -100,7 +100,7 @@ const generateUserData = (usernames, users) => {
   } else {
     const username = usernames.pop()
     return getUserRepoDetails(username)
-      .then(user => addUser(user, users))
+      .then(user => user === null ? null : addUser(user, users))
       .then(() => generateUserData(usernames, users))
   }
 }
