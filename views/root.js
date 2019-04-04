@@ -44,6 +44,14 @@ $(document).ready(function() {
   addCities()
   addUsers()
   $('.collapsible').collapsible()
+  $('#userSearch').on('keypress', (e) => {
+    if (e.which === 13) {
+      const name = $('#userSearch').val()
+      getUser(name).done(res => {
+        $('#one-user').empty().append(JSON.stringify(res))
+      })
+    }
+  })
 })
 
 const addCities = e => {
