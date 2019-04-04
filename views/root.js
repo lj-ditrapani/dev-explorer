@@ -44,11 +44,22 @@ $(document).ready(function() {
   addCities()
   addUsers()
   $('.collapsible').collapsible()
-  $('#userSearch').on('keypress', (e) => {
+  $('#userSearch').on('keypress', e => {
     if (e.which === 13) {
       const name = $('#userSearch').val()
-      getUser(name).done(res => {
-        $('#one-user').empty().append(JSON.stringify(res))
+      getUser(name).done(user => {
+        const rows = Object.entries(user.languages)
+          .sort((a, b) => b[1] - a[1])
+          .map(tuple => `<tr><td>${tuple[0]}</td><td>${tuple[1]}</td></tr>`)
+        const langs = `<table><tr><th>Language</th><th>Bytes</th></tr>${rows.join(
+          '\n'
+        )}</table>`
+        const main = `<p><img style="width: 125px" src=${user.avatarUrl}> Username: ${
+          user.login
+        } Bytes: ${user.totalSize} <a href="${user.url}">${user.url}</a></p>`
+        $('#one-user')
+          .empty()
+          .append(main + langs)
       })
     }
   })
