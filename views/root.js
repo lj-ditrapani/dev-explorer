@@ -82,9 +82,8 @@ const citiesData = [
   }
 ]
 const getCities = () => {
-  $.get('http://localhost:3000/cities')
-    .done((cities) => {
-        console.log(cities)
+  return $.get('http://localhost:3000/cities')
+    .done(cities => {
       console.log('successfully retrieved cities data')
     })
     .fail(function() {
@@ -92,8 +91,8 @@ const getCities = () => {
     })
 }
 const getCity = city => {
-  $.get(`http://localhost:3000/city/${city}`)
-    .done((city) => {
+  return $.get(`http://localhost:3000/city/${city}`)
+    .done(() => {
       console.log('successfully retrieved city data')
     })
     .fail(function() {
@@ -101,8 +100,8 @@ const getCity = city => {
     })
 }
 const getUsers = () => {
-  $.get(`http://localhost:3000/users`)
-    .done((users) => {
+  return $.get(`http://localhost:3000/users`)
+    .done(() => {
       console.log('successfully retrieved users data')
     })
     .fail(function() {
@@ -110,8 +109,8 @@ const getUsers = () => {
     })
 }
 const getUser = user => {
-  $.get(`http://localhost:3000/user/${user}`)
-    .done((user) => {
+  return $.get(`http://localhost:3000/user/${user}`)
+    .done((res) => {
       console.log('successfully retrieved user data')
     })
     .fail(function() {
@@ -134,10 +133,9 @@ $(document).ready(function() {
   initMap()
   displayMarkers(cities)
   addCities()
+  addUsers()
   mapLanguGeImgs()
   $('.collapsible').collapsible()
-  addLanguages()
-  getCities()
 })
 
 const addCities = e => {
@@ -151,45 +149,36 @@ const addCities = e => {
   })
 }
 
-const addLanguages = () => {
-  citiesData.map(item => {
-    $('#poop').append(
-      `<tr>
-            <img src=${item.img}</img>
-            <td>${item.topLanguage}
-            </td>
-            <td>${item.users}</td>
-            <td>${item.bitSize}</td>
-        </tr>`
-    )
-  })
-  console.log(citiesData)
-}
-
 const addUsers = () => {
-    users.map(item => {
+  getUsers().done(res => {
+      console.log(res)
+    res.users.forEach(user => {
+      getUser(user).then(item => {
         $('#collapsible').append(
-            `
-            <li>
-                <div class="collapsible-header">
-                <div id="user-name">
-                    <img style="margin-left:35px;width:100px;height:100px" src="${item.avatar}" alt="" class="circle">
-                    <h5 class="title">Name: ${item.login}</h5>
-                    <a href=${item.url} class="title">Github: ${item.url}</a>
-                </div>
-
-                </div>
-                <div class="collapsible-body">
-                <span id="details-user">
-                    <p> BIO: ${item.bio}</p>
-                    <p> LANGUAGES: ${item.languages}</p>
-                    <p>NUMBER OF REPOS: ${item.numberofRepos}</p>
-                </span>
-                </div>
-            </li>
-            `
+          `
+                    <li>
+                        <div class="collapsible-header">
+                        <div id="user-name">
+                            <img style="margin-left:35px;width:100px;height:100px" src="${
+                              item.avatarUrl
+                            }" alt="" class="circle">
+                            <h5 class="title">Name: ${item.login}</h5>
+                            <a href=${item.url} class="title">Github: ${item.url}</a>
+                        </div>
+        
+                        </div>
+                        <div class="collapsible-body">
+                        <span id="details-user">
+                            <p> LOCATION: ${item.location}</p>
+                            <p> LANGUAGES: ${JSON.stringify(item.languages)}</p>
+                        </span>
+                        </div>
+                    </li>
+                    `
         )
+      })
     })
+  })
 }
 
 const locations = ['toronto', 'montreal']
@@ -202,59 +191,35 @@ function initMap() {
   })
 }
 
-  const getLocationsCoords = (location, topLanguage, numUsers) => {
+const getLocationsCoords = (location, topLanguage, numUsers) => {
     if (!location.includes(',')) {
       location+=(', On')
     }
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
-    )
-      .then(function(res) {
-        return res.json()
+  fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
+  )
+    .then(function(res) {
+      return res.json()
+    })
+    .then(function(json) {
+      var infowindow = new google.maps.InfoWindow({
+        content: `<h6 style="font-weight:bold">${location} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
       })
-      .then(function(json) {
-          console.log(json.results[0].geometry.location)
-          var infowindow = new google.maps.InfoWindow({
-            content: `<h6 style="font-weight:bold">${location} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
-          });
-        
-        var marker = new google.maps.Marker({
-          position: json.results[0].geometry.location,
-          map: map,
-          animation: google.maps.Animation.DROP
-        })
-        marker.addListener('click', function() {
-            infowindow.open(map, marker);
-          });        
-    }).catch(err => console.error(err))
 
-  }
+      var marker = new google.maps.Marker({
+        position: json.results[0].geometry.location,
+        map: map,
+        animation: google.maps.Animation.DROP
+      })
+      marker.addListener('click', function() {
+        infowindow.open(map, marker)
+      })
+    })
+    .catch(err => console.error(err))
+}
+
+const users = [
   
-  const users = [
-    {
-        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
-        login: 'billwu99',
-        url: 'github/billu99',
-        numberofRepos: 3,
-        bio: 'I am cool',
-        languages: ['Scala', 'Kotlin']
-    },
-    {
-        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
-        login: 'billwu99',
-        url: 'github/billu99',
-        numberofRepos: 3,
-        bio: 'I am cool',
-        languages: ['Scala', 'Kotlin']
-    },
-    {
-        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
-        login: 'billwu99',
-        url: 'github/billu99',
-        numberofRepos: 3,
-        bio: 'I am cool',
-        languages: ['Scala', 'Kotlin']
-    }
 ]
 
 const displayMarkers = (cities) => {
