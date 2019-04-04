@@ -71,7 +71,11 @@ const transformUser = user => {
   }
 }
 
-const cleanLocation = location => location.split(',')[0].trim()
+const cleanLocation = location =>
+  location
+    .split(',')[0]
+    .trim()
+    .toLowerCase()
 
 const addUser = (user, users, cities) => {
   const newUser = transformUser(user)
