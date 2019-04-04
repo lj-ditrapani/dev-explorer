@@ -142,11 +142,15 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
             .sort((a, b) => b[1].numUsers - a[1].numUsers)
             .map(
               entry =>
-                `<p> ${entry[0]}: ${entry[1].numUsers} Users and ${
+                `<tr><td> ${entry[0]}</td><td>${entry[1].numUsers}</td><td>${
                   entry[1].byteSize
-                } Bytes </p>`
+                }</td></tr>`
             )
-          d.empty().append(rows.join('\n'))
+          d.empty().append(
+            '<table><tr><th>language</th><th>Users</th><th>Bytes</th></tr>' +
+              rows.join('\n') +
+              '</table>'
+          )
         })
         infowindow.open(map, marker)
       })
