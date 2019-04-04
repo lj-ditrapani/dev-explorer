@@ -25,7 +25,10 @@ const setup = client => {
 }
 
 const getCities = cities => (req, res) => {
-  cities.find({}).toArray().then(result => res.send(result))
+  cities
+    .find({})
+    .toArray()
+    .then(result => res.send(result))
 }
 
 const getUsers = users => (req, res) => {

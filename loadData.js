@@ -90,7 +90,9 @@ MongoClient.connect(url).then(client => {
   const db = client.db(dbName)
   const users = db.collection('users')
   const cities = db.collection('cities')
-  generateUserData(usernames.users, users, {'Montreal, Canada': {location: 'Montreal, Canada'}})
+  generateUserData(usernames.users, users, {
+    'Montreal, Canada': { location: 'Montreal, Canada' }
+  })
     .then(cityData => cities.insertMany(Object.values(cityData)))
     .then(() => showUsers(users))
     .then(() => client.close())
