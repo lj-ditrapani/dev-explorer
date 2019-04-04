@@ -1,81 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="./css/index.css">  
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <script src="root.js" ></script>
-    <!-- <script src="js/map.js" ></script> -->
-    <script type="module" src="constants.js"></script>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  </head>
-  <body>
-    <div class="landing-page">
-      <nav>
-        <div class="nav-wrapper grey darken-4">
-          <form>
-            <div class="input-field">
-              <input placeholder="Find Cities" id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </div>
-      </nav>
 
-      <h1 class="center">CITIES WITH MOST USED LANGUAGES</h1>
-      <h4 class="center">Cities That Matters :)</h4>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <script src="root.js"></script>
+  <!-- <script src="js/map.js" ></script> -->
+  <script type="module" src="constants.js"></script>
 
-      <div style="height:100%; width: 100%;"> 
-        <div id="map"></div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ"
-        async defer></script>
-      
-        </div>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div class="landing-page">
+    <nav>
+      <div class="nav-wrapper grey darken-4">
+        <form>
+          <div class="input-field">
+            <input placeholder="Find Cities" id="search" type="search" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <h1 class="center">CITIES WITH MOST USED LANGUAGES</h1>
+    <h4 class="center">Cities That Matters :)</h4>
+
+    <div style="height:100%; width: 100%;">
+      <div id="map"></div>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ" async
+        defer></script>
+
     </div>
+  </div>
 
-        <!-- SECOND PAGE -->
-        <div class="users-in-city">
-            <table class="">
-              <thead>
-                <tr style="font-size: 40px; padding:40px">
-                  <th>City</th>
-                  <th>Users</th>
-                  <th>Size</th>
-                </tr>
-                <tbody id="poop" class="users-in-city-table"></tbody>
-              </thead>
-            </table>
-        </div>
+  <!-- SECOND PAGE -->
+  <div class="users-in-city">
+    <table class="">
+      <thead>
+        <tr style="font-size: 40px; padding:40px">
+          <th>City</th>
+          <th>Users</th>
+          <th>Size</th>
+        </tr>
+      <tbody>
+        <ul id="poop" class="collapsible">
+        </ul>
+      </tbody>
+      </thead>
+    </table>
+  </div>
 
-        <!-- USERS -->
-        <div class="topUsers">
-            <nav>
-              <div class="nav-wrapper grey darken-4">
-                <form>
-                  <div class="input-field">
-                    <input placeholder="Find User" id="search" type="search" required>
-                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
-                  </div>
-                </form>
-              </div>
-            </nav>
-            <h1>Top Developers </h1>
-            <table class="">
-              <thead>
-                <tbody>
-                    <ul id="collapsible" class="collapsible">
-                      </ul>
-                </tbody>
-              </thead>
-            </table>
-        </div>
+  <!-- USERS -->
+  <div class="topUsers">
+    <nav>
+      <div class="nav-wrapper grey darken-4">
+        <form>
+          <div class="input-field">
+            <input placeholder="Find User" id="search" type="search" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+    <h1>Top Developers </h1>
+    <table class="">
+      <thead>
+      <tbody>
+        <ul id="collapsible" class="collapsible">
+        </ul>
+      </tbody>
+      </thead>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  </body>
 </html>

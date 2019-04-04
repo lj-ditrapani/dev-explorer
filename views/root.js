@@ -48,11 +48,30 @@ $(document).ready(function() {
 
 const addCities = e => {
   getCities().done(res => {
+      console.log(res)
+      getCity(res.cities.map(c => c.location)).done(city => {
+          console.log(city)
+      })
     res.cities.map(item => {
-      $('#cities').append(
-        `<li class="collection-item">${item.location}</li>
-            <li class="collection-item">${item.users}</li>
-            <li class="collection-item">${item.language}</li>
+      $('#poop').append(
+        `<li class="collection-item">
+            <div class="collapsible-header">
+                <div id="user-name">
+                    <p> Location: ${item.location}</p>
+                    <p> Users: ${item.numUsers}</p>
+                    <p> Languages: ${item.language}</p>
+                </div>
+            </div>
+
+            <div class="collapsible-body">
+                <div>
+                    <span>
+                    <p> Top Uders: ${item.location.location}</p>
+                    <p> Lines Written: ${(item.location.language)}</p>
+                    </span>
+                </div>
+            </div>
+        </li>
             `
       )
     })
