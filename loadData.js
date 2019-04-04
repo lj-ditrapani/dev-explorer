@@ -80,11 +80,27 @@ const addUser = (user, users, cities) => {
 const updateCities = (user, cities) => {
   const data = {
     location: user.location,
-    languages: user.languages,
+    languages: R.map(byteSize => ({ byteSize, numUsers: 1 }), user.languages),
     numUsers: 1,
     topUsers: [user]
   }
-  cities[user.location] = data
+  const original = cities[user.location]
+  if (original === undefined) {
+    cities[user.location] = data
+  } else {
+    const topUsers = original.topUsers.concat(data.topUsers).slice(0, 10)
+    const langMerge = (a, b) => ({
+      byteSize: a.byteSize + b.byteSize,
+      numUsers: a.numUsers + b.numUsers
+    })
+    const languages = R.mergeWith(langMerge, original.languages, data.languages)
+    cities[user.location] = {
+      location: original.location,
+      numUsers: original.numUsers + data.numUsers,
+      languages,
+      topUsers
+    }
+  }
 }
 
 const showUsers = users =>
