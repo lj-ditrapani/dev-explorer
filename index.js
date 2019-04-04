@@ -32,7 +32,15 @@ const getCities = cities => (req, res) => {
 }
 
 const getUsers = users => (req, res) => {
-  res.send('Users!')
+  users
+    .find({})
+    .toArray()
+    .then(results => {
+      const login = results.map(res => {
+        return res.login
+      })
+      res.send(login)
+    })
 }
 
 const getCity = cities => (req, res) => {
