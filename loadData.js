@@ -5,7 +5,7 @@ const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
-const usernames = require('./test_users.json')
+const usernames = require('./test_users_small.json')
 
 const getUserRepoDetails = username => {
   return axios
@@ -71,9 +71,20 @@ const transformUser = user => {
   }
 }
 
-const addUser = (user, users) => {
+const addUser = (user, users, cities) => {
   const newUser = transformUser(user)
+  updateCities(newUser, cities)
   return users.insertOne(newUser)
+}
+
+const updateCities = (user, cities) => {
+  const data = {
+    location: user.location,
+    languages: user.languages,
+    numUsers: 1,
+    topUsers: [user]
+  }
+  cities[user.location] = data
 }
 
 const showUsers = users =>
@@ -90,9 +101,7 @@ MongoClient.connect(url).then(client => {
   const db = client.db(dbName)
   const users = db.collection('users')
   const cities = db.collection('cities')
-  generateUserData(usernames.users, users, {
-    'Montreal, Canada': { location: 'Montreal, Canada' }
-  })
+  generateUserData(usernames.users, users, {})
     .then(cityData => cities.insertMany(Object.values(cityData)))
     .then(() => showUsers(users))
     .then(() => client.close())
@@ -105,7 +114,7 @@ const generateUserData = (usernames, users, cities) => {
     const username = usernames.pop()
     console.log(`Fetching user data for ${username}`)
     return getUserRepoDetails(username)
-      .then(user => (user.data.user === null ? null : addUser(user, users)))
+      .then(user => (user.data.user === null ? null : addUser(user, users, cities)))
       .then(() => generateUserData(usernames, users, cities))
   }
 }
