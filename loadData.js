@@ -59,9 +59,11 @@ const transformUser = user => {
   const rawUser = user.data.user
   const languages = rawUser.repositories.nodes.reduce(repoReducer, {})
   return {
+    avatarUrl: rawUser.avatarUrl,
     login: rawUser.login,
     location: rawUser.location,
-    languages
+    languages,
+    url: rawUser.url
   }
 }
 
