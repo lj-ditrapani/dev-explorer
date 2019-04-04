@@ -36,7 +36,7 @@ const getUsers = users => (req, res) => {
     .find({})
     .toArray()
     .then(results => {
-      res.send(results.map(res => res.login))
+      res.send(results.map(r => r.login))
     })
 }
 
