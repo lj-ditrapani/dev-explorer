@@ -138,7 +138,15 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
       marker.addListener('click', function() {
         getCity(location).done(city => {
           const d = $(`#${location}`)
-          d.empty().append(JSON.stringify(city))
+          const rows = Object.entries(city.languages)
+            .sort((a, b) => b[1].numUsers - a[1].numUsers)
+            .map(
+              entry =>
+                `<p> ${entry[0]}: ${entry[1].numUsers} Users and ${
+                  entry[1].byteSize
+                } Bytes </p>`
+            )
+          d.empty().append(rows.join('\n'))
         })
         infowindow.open(map, marker)
       })
