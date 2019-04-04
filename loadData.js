@@ -89,7 +89,7 @@ MongoClient.connect(url).then(client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
   const users = db.collection('users')
-  generateUserData(usernames.users, users)
+  generateUserData(usernames.users.slice(0, 20), users)
     .then(() => showUsers(users))
     .then(() => client.close())
 })
