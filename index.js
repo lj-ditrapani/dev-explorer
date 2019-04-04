@@ -28,7 +28,15 @@ const getCities = cities => (req, res) => {
   cities
     .find({})
     .toArray()
-    .then(result => res.send(result))
+    .then(results => {
+      const cityData = results.map(r => ({
+        location: r.location,
+        topLanguage: r.topLanguage,
+        numUsers: r.numUsers,
+        totalSize: 0
+      }))
+      res.send({cities: cityData})
+    })
 }
 
 const getUsers = users => (req, res) => {
