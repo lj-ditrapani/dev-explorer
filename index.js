@@ -36,7 +36,14 @@ const getCity = (users) => (req, res) => {
 }
 
 const getUser = (users) => (req, res) => {
-  res.send('User!')
+  const userName = req.params.name
+  users.find({ login: userName }).toArray().then(results => {
+    if (results.length === 1) {
+      res.send(results[0])
+    } else {
+      res.send({ error: `no user found for ${userName}` })
+    }
+  })
 }
 
 MongoClient.connect(url).then(setup).catch(e => console.log(e))
