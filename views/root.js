@@ -157,9 +157,11 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
           console.log(userDiv)
           const userRows = city.topUsers.map(
             user =>
-              `<tr><td><img style="width: 125px" src=${user.avatarUrl}></td><td>${user.login}</td><td>${user.totalSize}</td><td>${
+              `<tr><td><img style="width: 125px" src=${user.avatarUrl}></td><td>${
+                user.login
+              }</td><td>${user.totalSize}</td><td><a href="${user.url}">${
                 user.url
-              }</td></tr>`
+              }</a></td></tr>`
           )
           userDiv
             .empty()
