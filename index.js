@@ -12,14 +12,15 @@ const dbName = 'devexplorer'
 const setup = client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
+  const users = db.collection('users')
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
   })
-  app.get('/data', getData)
+  app.get('/data', getData(users))
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
 
-const getData = (req, res) => {
+const getData = (users) => (req, res) => {
   res.send('No you!')
 }
 
