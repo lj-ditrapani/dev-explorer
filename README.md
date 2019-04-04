@@ -59,9 +59,11 @@ Response Format
 /cities
 ```
 {
-    montreal: {topLang: string, totalSize: num, numUsers: num},
-    toronto: {topLang: string, totalSize: num, numUsers: num}
-    ...
+cities: [
+        {location: montreal, topLang: string, totalSize: num, numUsers: num},
+        {location: toronto, topLang: string, totalSize: num, numUsers: num}
+        ...
+    ]
 }
 ```
 
