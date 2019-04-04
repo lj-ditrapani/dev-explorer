@@ -166,7 +166,7 @@ const addUsers = () => {
     })
   }
   
-  const getLocationsCoords = location => {
+  const getLocationsCoords = (location, topLanguage, numUsers) => {
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
     )
@@ -175,21 +175,18 @@ const addUsers = () => {
       })
       .then(function(json) {
           console.log(json.results[0].geometry.location)
+          var infowindow = new google.maps.InfoWindow({
+            content: `<h6 style="font-weight:bold">${location} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
+          });
+        
         var marker = new google.maps.Marker({
           position: json.results[0].geometry.location,
           map: map,
-          label: {
-            color: 'black',
-            fontWeight: 'bold',
-            text: 'LANG'
-          },
-          icon: {
-            labelOrigin: new google.maps.Point(11, 50),
-            size: new google.maps.Size(22, 40),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(11, 40)
-          }
+          animation: google.maps.Animation.DROP
         })
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+          });        
       })
       .catch(err => console.error(err))
   }
