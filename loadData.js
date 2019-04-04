@@ -5,7 +5,7 @@ const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
-const usernames = require('./users.json')
+const usernames = require('./test_users.json')
 
 const getUserRepoDetails = username => {
   return axios
