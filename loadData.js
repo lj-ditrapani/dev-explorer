@@ -84,19 +84,17 @@ MongoClient.connect(url).then(client => {
   const db = client.db(dbName)
   const users = db.collection('users')
   generateUserData(usernames.users, users)
-  .then(() => showUsers(users))
-  .then(() => client.close())
+    .then(() => showUsers(users))
+    .then(() => client.close())
 })
 
 const generateUserData = (usernames, users) => {
-    if(usernames.length === 0){
-        return
-    }
-    else {
-        const username = usernames.pop()
-        return getUserRepoDetails(username).then(
-            user => addUser(user, users)).then(() =>
-                generateUserData(usernames, users)
-            )
-    }
+  if (usernames.length === 0) {
+    return
+  } else {
+    const username = usernames.pop()
+    return getUserRepoDetails(username)
+      .then(user => addUser(user, users))
+      .then(() => generateUserData(usernames, users))
+  }
 }
