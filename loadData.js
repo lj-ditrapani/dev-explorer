@@ -5,7 +5,7 @@ const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
-const usernames = require('./test_users_small.json')
+const usernames = require('./test_users.json')
 
 const getUserRepoDetails = username => {
   return axios
@@ -131,11 +131,11 @@ const insertCities = cities => cityData => {
     const langTuple = Object.entries(city.languages).sort(
       (a, b) => b[1].numUsers - a[1].numUsers
     )[0]
+    city.topLanguage = langTuple === undefined ? 'N/A' : langTuple[0]
     const totalSize = Object.values(city.languages).reduce(
       (acc, lang) => acc + lang.byteSize,
       0
     )
-    city.topLanguage = langTuple[0]
     city.totalSize = totalSize
   })
   return cities.insertMany(Object.values(cityData))
