@@ -11,7 +11,7 @@ fetches = []
 const location = process.argv[2]
 
 if (location) {
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 1; i++) {
     fetches.push(
       fetch(
         `https://api.github.com/search/users?q=location:${location}&page=${i}&per_page=100&sort:followers`,
