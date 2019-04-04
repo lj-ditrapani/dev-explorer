@@ -103,6 +103,7 @@ const generateUserData = (usernames, users, cities) => {
     return cities
   } else {
     const username = usernames.pop()
+    console.log(`Fetching user data for ${username}`)
     return getUserRepoDetails(username)
       .then(user => (user.data.user === null ? null : addUser(user, users)))
       .then(() => generateUserData(usernames, users, cities))
