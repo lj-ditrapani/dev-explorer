@@ -23,29 +23,34 @@ const setup = client => {
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
 
-const getCities = (users) => (req, res) => {
+const getCities = users => (req, res) => {
   res.send('Cities!')
 }
 
-const getUsers = (users) => (req, res) => {
+const getUsers = users => (req, res) => {
   res.send('Users!')
 }
 
-const getCity = (users) => (req, res) => {
+const getCity = users => (req, res) => {
   res.send('City!')
 }
 
-const getUser = (users) => (req, res) => {
+const getUser = users => (req, res) => {
   const userName = req.params.name
-  users.find({ login: userName }).toArray().then(results => {
-    if (results.length === 1) {
-      res.send(results[0])
-    } else {
-      res.send({ error: `no user found for ${userName}` })
-    }
-  })
+  users
+    .find({ login: userName })
+    .toArray()
+    .then(results => {
+      if (results.length === 1) {
+        res.send(results[0])
+      } else {
+        res.send({ error: `no user found for ${userName}` })
+      }
+    })
 }
 
-MongoClient.connect(url).then(setup).catch(e => console.log(e))
+MongoClient.connect(url)
+  .then(setup)
+  .catch(e => console.log(e))
 
 app.use(express.static(path.join(__dirname, 'views')))

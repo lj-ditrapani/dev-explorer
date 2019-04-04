@@ -60,8 +60,8 @@ const repoReducer = (acc, repo) => {
 
 const transformUser = user => {
   const rawUser = user.data.user
-  const init = { totalSize: 0, languages: {}}
-  const repoData= rawUser.repositories.nodes.reduce(repoReducer, init)
+  const init = { totalSize: 0, languages: {} }
+  const repoData = rawUser.repositories.nodes.reduce(repoReducer, init)
   return {
     avatarUrl: rawUser.avatarUrl,
     login: rawUser.login,
