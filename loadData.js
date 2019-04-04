@@ -89,18 +89,20 @@ MongoClient.connect(url).then(client => {
   console.log('Connected to mongodb')
   const db = client.db(dbName)
   const users = db.collection('users')
-  generateUserData(usernames.users, users)
+  const cities = db.collection('cities')
+  generateUserData(usernames.users, users, {'Montreal, Canada': {location: 'Montreal, Canada'}})
+    .then(cityData => cities.insertMany(Object.values(cityData)))
     .then(() => showUsers(users))
     .then(() => client.close())
 })
 
-const generateUserData = (usernames, users) => {
+const generateUserData = (usernames, users, cities) => {
   if (usernames.length === 0) {
-    return
+    return cities
   } else {
     const username = usernames.pop()
     return getUserRepoDetails(username)
       .then(user => (user.data.user === null ? null : addUser(user, users)))
-      .then(() => generateUserData(usernames, users))
+      .then(() => generateUserData(usernames, users, cities))
   }
 }
