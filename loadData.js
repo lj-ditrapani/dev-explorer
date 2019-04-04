@@ -5,7 +5,7 @@ const assert = require('assert')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
-const usernames = require('./test_users.json')
+const usernames = require('./test_users_small.json')
 
 const getUserRepoDetails = username => {
   return axios
@@ -65,11 +65,13 @@ const transformUser = user => {
   return {
     avatarUrl: rawUser.avatarUrl,
     login: rawUser.login,
-    location: rawUser.location,
+    location: cleanLocation(rawUser.location),
     url: rawUser.url,
     ...repoData
   }
 }
+
+const cleanLocation = location => location.split(',')[0].trim()
 
 const addUser = (user, users, cities) => {
   const newUser = transformUser(user)
