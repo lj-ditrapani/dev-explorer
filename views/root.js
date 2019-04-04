@@ -99,6 +99,7 @@ $( document ).ready(function() {
     mapLanguGeImgs()
     $('.collapsible').collapsible();
     addLanguages()
+    addUsers()
 });
 
 
@@ -127,7 +128,32 @@ const addLanguages = () => {
 })
 
     console.log(citiesData)
+}
 
+const addUsers = () => {
+    users.map(item => {
+        $('#collapsible').append(
+            `
+            <li>
+                <div class="collapsible-header">
+                <div id="user-name">
+                    <img style="margin-left:35px;width:100px;height:100px" src="${item.avatar}" alt="" class="circle">
+                    <h5 class="title">Name: ${item.login}</h5>
+                    <a href=${item.url} class="title">Github: ${item.url}</a>
+                </div>
+
+                </div>
+                <div class="collapsible-body">
+                <span id="details-user">
+                    <p> BIO: ${item.bio}</p>
+                    <p> LANGUAGES: ${item.languages}</p>
+                    <p>NUMBER OF REPOS: ${item.numberofRepos}</p>
+                </span>
+                </div>
+            </li>
+            `
+        )
+    })
 }
   
   const locations = ['toronto', 'montreal']
@@ -174,3 +200,30 @@ const addLanguages = () => {
     })
   }
   
+  const users = [
+    {
+        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
+        login: 'billwu99',
+        url: 'github/billu99',
+        numberofRepos: 3,
+        bio: 'I am cool',
+        languages: ['Scala', 'Kotlin']
+    },
+    {
+        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
+        login: 'billwu99',
+        url: 'github/billu99',
+        numberofRepos: 3,
+        bio: 'I am cool',
+        languages: ['Scala', 'Kotlin']
+    },
+    {
+        avatar: 'https://i.stack.imgur.com/8Yn9o.jpg',
+        login: 'billwu99',
+        url: 'github/billu99',
+        numberofRepos: 3,
+        bio: 'I am cool',
+        languages: ['Scala', 'Kotlin']
+    },
+    
+]
