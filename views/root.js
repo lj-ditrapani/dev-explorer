@@ -48,27 +48,20 @@ $(document).ready(function() {
 
 const addCities = e => {
   getCities().done(res => {
-      console.log(res)
-      getCity(res.cities.map(c => c.location)).done(city => {
-          console.log(city)
-      })
-    res.cities.map(item => {
+    console.log(res)
+    filterCities(res.cities).map(item => {
       $('#poop').append(
         `<li class="collection-item">
             <div class="collapsible-header">
                 <div id="user-name">
                     <p> Location: ${item.location}</p>
                     <p> Users: ${item.numUsers}</p>
-                    <p> Languages: ${item.language}</p>
+                    <p> Top Language: ${item.topLanguage}</p>
                 </div>
             </div>
 
             <div class="collapsible-body">
-                <div>
-                    <span>
-                    <p> Top Uders: ${item.location.location}</p>
-                    <p> Lines Written: ${(item.location.language)}</p>
-                    </span>
+                <div id="${item.location}">
                 </div>
             </div>
         </li>
@@ -109,6 +102,11 @@ const addUsers = () => {
   })
 }
 
+const filterCities = cities =>
+  cities.filter(c =>
+    ['montreal', 'toronto', 'guelph', 'markham', 'kitchener'].includes(c.location)
+  )
+
 const locations = ['toronto', 'montreal']
 
 var map
@@ -120,18 +118,16 @@ function initMap() {
 }
 
 const getLocationsCoords = (location, topLanguage, numUsers) => {
-  if (!location.includes(',')) {
-    location += ', On'
-  }
+  const location2 = location + ', On'
   fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${location2}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
   )
     .then(function(res) {
       return res.json()
     })
     .then(function(json) {
       var infowindow = new google.maps.InfoWindow({
-        content: `<h6 style="font-weight:bold">${location} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
+        content: `<h6 style="font-weight:bold">${location2} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
       })
 
       var marker = new google.maps.Marker({
@@ -140,6 +136,10 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
         animation: google.maps.Animation.DROP
       })
       marker.addListener('click', function() {
+        getCity(location).done(city => {
+          const d = $(`#${location}`)
+          d.empty().append(JSON.stringify(city))
+        })
         infowindow.open(map, marker)
       })
     })
@@ -148,7 +148,7 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
 
 const displayMarkers = cities => {
   cities.done(res => {
-    res.cities.forEach(city => {
+    filterCities(res.cities).forEach(city => {
       getLocationsCoords(city.location, city.topLanguage, city.numUsers)
     })
   })
