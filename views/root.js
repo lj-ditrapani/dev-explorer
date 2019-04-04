@@ -72,34 +72,7 @@ const addCities = e => {
 }
 
 const addUsers = () => {
-  getUsers().done(res => {
-    res.users.forEach(user => {
-      getUser(user).then(item => {
-        $('#collapsible').append(
-          `
-                    <li>
-                        <div class="collapsible-header">
-                        <div id="user-name">
-                            <img style="margin-left:35px;width:100px;height:100px" src="${
-                              item.avatarUrl
-                            }" alt="" class="circle">
-                            <h5 class="title">Name: ${item.login}</h5>
-                            <a href=${item.url} class="title">Github: ${item.url}</a>
-                        </div>
-        
-                        </div>
-                        <div class="collapsible-body">
-                        <span id="details-user">
-                            <p> LOCATION: ${item.location}</p>
-                            <p> LANGUAGES: ${JSON.stringify(item.languages)}</p>
-                        </span>
-                        </div>
-                    </li>
-                    `
-        )
-      })
-    })
-  })
+  getUsers().done(res => {})
 }
 
 const filterCities = cities =>
