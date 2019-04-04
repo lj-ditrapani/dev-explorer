@@ -2,17 +2,17 @@
 
 const cities = [
   {
-    name: 'Hi',
+    name: 'Toronto',
     language: 'Hi',
     numberOfUser: 0
   },
   {
-    name: 'Hi',
+    name: 'Montreal',
     language: 'Hi',
     numberOfUser: 0
   },
   {
-    name: 'Hi',
+    name: 'Waterloo',
     language: 'Hi',
     numberOfUser: 0
   }
@@ -132,7 +132,7 @@ const mapLanguGeImgs = () => {
 $(document).ready(function() {
   console.log('ready!')
   initMap()
-  displayMarkers()
+  displayMarkers(cities)
   addCities()
   mapLanguGeImgs()
   $('.collapsible').collapsible()
@@ -203,6 +203,9 @@ function initMap() {
 }
 
   const getLocationsCoords = (location, topLanguage, numUsers) => {
+    if (!location.includes(',')) {
+      location+=(', On')
+    }
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
     )
@@ -254,7 +257,13 @@ function initMap() {
     }
 ]
 
-const displayMarkers = () => {
+const displayMarkers = (cities) => {
+  cities.forEach(city => {
+    getLocationsCoords(city.name, city.language, city.numberOfUser)
+  })
+}
+
+const deprecated = () => {
   locations.forEach(address => {
     getLocationsCoords(address)
   })
