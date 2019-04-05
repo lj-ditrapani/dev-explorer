@@ -1,41 +1,21 @@
 // var DATA = require('./constants');
 
-const getCities = () => {
-  return $.get('http://localhost:3000/cities')
-    .done(cities => {
-      console.log('successfully retrieved cities data')
-    })
-    .fail(function() {
-      console.log('error: could not get cities data')
-    })
-}
-const getCity = city => {
-  return $.get(`http://localhost:3000/city/${city}`)
-    .done(() => {
-      console.log('successfully retrieved city data')
-    })
-    .fail(function() {
-      console.log('error: could not get city data')
-    })
-}
-const getUsers = () => {
-  return $.get(`http://localhost:3000/users`)
-    .done(() => {
-      console.log('successfully retrieved users data')
-    })
-    .fail(function() {
-      console.log('error: could not get users data')
-    })
-}
-const getUser = user => {
-  return $.get(`http://localhost:3000/user/${user}`)
-    .done(res => {
-      console.log('successfully retrieved user data')
-    })
-    .fail(function() {
-      console.log('error: could not get user data')
-    })
-}
+const getCities = () =>
+  $.get('http://localhost:3000/cities').fail(() => {
+    console.log('error: could not get cities data')
+  })
+const getCity = city =>
+  $.get(`http://localhost:3000/city/${city}`).fail(() => {
+    console.log('error: could not get city data')
+  })
+const getUsers = () =>
+  $.get(`http://localhost:3000/users`).fail(() => {
+    console.log('error: could not get users data')
+  })
+const getUser = user =>
+  $.get(`http://localhost:3000/user/${user}`).fail(() => {
+    console.log('error: could not get user data')
+  })
 
 $(document).ready(function() {
   console.log('ready!')
@@ -47,7 +27,7 @@ $(document).ready(function() {
   $('#userSearch').on('keypress', e => {
     if (e.which === 13) {
       const name = $('#userSearch').val()
-      getUser(name).done(user => {
+      getUser(name).then(user => {
         const rows = Object.entries(user.languages)
           .sort((a, b) => b[1] - a[1])
           .map(tuple => `<tr><td>${tuple[0]}</td><td>${tuple[1]}</td></tr>`)
@@ -66,7 +46,7 @@ $(document).ready(function() {
 })
 
 const addCities = () => {
-  getCities().done(res => {
+  getCities().then(res => {
     console.log(res)
     filterCities(res.cities).map(city => {
       $('#city-list').append(
@@ -95,7 +75,7 @@ const addCities = () => {
 }
 
 const addUsers = () => {
-  getUsers().done(res => {})
+  getUsers().then(res => {})
 }
 
 const filterCities = cities =>
@@ -116,7 +96,9 @@ function initMap() {
 const getLocationsCoords = (location, topLanguage, numUsers) => {
   const location2 = location + ', On'
   fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${location2}&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ`
+    'https://maps.googleapis.com/maps/api/geocode/json?address=' +
+      location2 +
+      '&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ'
   )
     .then(function(res) {
       return res.json()
@@ -180,7 +162,7 @@ const onCityClick = location => {
 }
 
 const displayMarkers = cities => {
-  cities.done(res => {
+  cities.then(res => {
     filterCities(res.cities).forEach(city => {
       getLocationsCoords(city.location, city.topLanguage, city.numUsers)
     })
