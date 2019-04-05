@@ -80,9 +80,9 @@ const filterCities = cities =>
 
 const locations = ['toronto', 'montreal']
 
-var map
+var googleMap
 const initMap = () => {
-  map = new google.maps.Map(document.getElementById('map'), {
+  googleMap = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 43.653, lng: -79.383 },
     zoom: 8
   })
@@ -104,12 +104,12 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
       if (json.results.length > 0) {
         const marker = new google.maps.Marker({
           position: json.results[0].geometry.location,
-          map: map,
+          map: googleMap,
           animation: google.maps.Animation.DROP
         })
         marker.addListener('click', () => {
           onCityClick(location)
-          infowindow.open(map, marker)
+          infowindow.open(googleMap, marker)
         })
       }
     })
