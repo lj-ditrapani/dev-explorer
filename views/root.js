@@ -17,9 +17,10 @@ const getUser = user =>
 
 $(document).ready(() => {
   const googleMap = initMap()
-  displayMarkers(googleMap, getCities())
-  addCities()
-  addUsers()
+  getCities().then(cities => {
+    displayMarkers(googleMap, cities)
+    addCities(cities)
+  })
   $('.collapsible').collapsible()
   $('#userSearch').on('keypress', e => {
     if (e.which === 13) {
@@ -42,11 +43,10 @@ $(document).ready(() => {
   })
 })
 
-const addCities = () => {
-  getCities().then(res => {
-    filterCities(res.cities).map(city => {
-      $('#city-list').append(
-        `<li class="collection-item" id="city-item-${city.location}">
+const addCities = res => {
+  filterCities(res.cities).map(city => {
+    $('#city-list').append(
+      `<li class="collection-item" id="city-item-${city.location}">
             <div class="collapsible-header">
                 <div id="user-name">
                     <p> Location: ${city.location}</p>
@@ -61,16 +61,11 @@ const addCities = () => {
             </div>
         </li>
             `
-      )
-      $(`#city-item-${city.location}`).click(e => {
-        onCityClick(city.location)
-      })
+    )
+    $(`#city-item-${city.location}`).click(e => {
+      onCityClick(city.location)
     })
   })
-}
-
-const addUsers = () => {
-  getUsers().then(res => {})
 }
 
 const filterCities = cities =>
@@ -96,7 +91,10 @@ const getLocationsCoords = (googleMap, location, topLanguage, numUsers) => {
     .then(res => res.json())
     .then(json => {
       const infowindow = new google.maps.InfoWindow({
-        content: `<h6 style="font-weight:bold">${location2} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
+        content:
+          '<h6 style="font-weight:bold">' +
+          `${location2} ~ ${topLanguage}` +
+          `</h6><h6>${numUsers} Users</h6>`
       })
 
       if (json.results.length > 0) {
@@ -151,10 +149,8 @@ const onCityClick = location => {
   })
 }
 
-const displayMarkers = (googleMap, cities) => {
-  cities.then(res => {
-    filterCities(res.cities).forEach(city => {
-      getLocationsCoords(googleMap, city.location, city.topLanguage, city.numUsers)
-    })
+const displayMarkers = (googleMap, res) => {
+  filterCities(res.cities).forEach(city => {
+    getLocationsCoords(googleMap, city.location, city.topLanguage, city.numUsers)
   })
 }
