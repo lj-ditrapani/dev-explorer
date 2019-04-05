@@ -65,27 +65,31 @@ $(document).ready(function() {
   })
 })
 
-const addCities = e => {
+const addCities = () => {
   getCities().done(res => {
     console.log(res)
-    filterCities(res.cities).map(item => {
-      $('#poop').append(
+    filterCities(res.cities).map(city => {
+      $('#city-list').append(
         `<li class="collection-item">
             <div class="collapsible-header">
                 <div id="user-name">
-                    <p> Location: ${item.location}</p>
-                    <p> Users: ${item.numUsers}</p>
-                    <p> Top Language: ${item.topLanguage}</p>
+                    <p> Location: ${city.location}</p>
+                    <p> Users: ${city.numUsers}</p>
+                    <p> Top Language: ${city.topLanguage}</p>
                 </div>
             </div>
 
             <div class="collapsible-body">
-                <div id="${item.location}">
+                <div id="${city.location}">
                 </div>
             </div>
         </li>
             `
       )
+      $(`#city-item-${city.location}`).click(e => {
+        console.log(e)
+        console.log(city.location)
+      })
     })
   })
 }
