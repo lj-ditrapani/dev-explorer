@@ -1,7 +1,9 @@
 const getCities = () =>
-  $.get('http://localhost:3000/cities').fail(() => {
-    console.log('error: could not get cities data')
-  })
+  $.get('http://localhost:3000/cities')
+    .fail(() => {
+      console.log('error: could not get cities data')
+    })
+    .then(res => filterCities(res.cities))
 const getCity = city =>
   $.get(`http://localhost:3000/city/${city}`).fail(() => {
     console.log('error: could not get city data')
@@ -22,29 +24,31 @@ $(document).ready(() => {
     addCities(cities)
   })
   $('.collapsible').collapsible()
-  $('#userSearch').on('keypress', e => {
-    if (e.which === 13) {
-      const name = $('#userSearch').val()
-      getUser(name).then(user => {
-        const rows = Object.entries(user.languages)
-          .sort((a, b) => b[1] - a[1])
-          .map(tuple => `<tr><td>${tuple[0]}</td><td>${tuple[1]}</td></tr>`)
-        const langs = `<table><tr><th>Language</th><th>Bytes</th></tr>${rows.join(
-          '\n'
-        )}</table>`
-        const main = `<p><img style="width: 125px" src=${user.avatarUrl}> Username: ${
-          user.login
-        } Bytes: ${user.totalSize} <a href="${user.url}">${user.url}</a></p>`
-        $('#one-user')
-          .empty()
-          .append(main + langs)
-      })
-    }
-  })
+  $('#userSearch').on('keypress', onUserSearch)
 })
 
-const addCities = res => {
-  filterCities(res.cities).map(city => {
+const onUserSearch = e => {
+  if (e.which === 13) {
+    const name = $('#userSearch').val()
+    getUser(name).then(user => {
+      const rows = Object.entries(user.languages)
+        .sort((a, b) => b[1] - a[1])
+        .map(tuple => `<tr><td>${tuple[0]}</td><td>${tuple[1]}</td></tr>`)
+      const langs =
+        '<table><tr><th>Language</th><th>Bytes</th></tr>' + rows.join('\n') + '</table>'
+      const main =
+        `<p><img style="width: 125px" src=${user.avatarUrl}> ` +
+        `Username: ${user.login} Bytes: ${user.totalSize} ` +
+        `<a href="${user.url}">${user.url}</a></p>`
+      $('#one-user')
+        .empty()
+        .append(main + langs)
+    })
+  }
+}
+
+const addCities = cities => {
+  cities.forEach(city => {
     $('#city-list').append(
       `<li class="collection-item" id="city-item-${city.location}">
             <div class="collapsible-header">
@@ -149,8 +153,8 @@ const onCityClick = location => {
   })
 }
 
-const displayMarkers = (googleMap, res) => {
-  filterCities(res.cities).forEach(city => {
+const displayMarkers = (googleMap, cities) => {
+  cities.forEach(city => {
     getLocationsCoords(googleMap, city.location, city.topLanguage, city.numUsers)
   })
 }
