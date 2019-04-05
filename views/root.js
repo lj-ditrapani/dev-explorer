@@ -15,7 +15,7 @@ const getUser = user =>
     console.log('error: could not get user data')
   })
 
-$(document).ready(function() {
+$(document).ready(() => {
   initMap()
   displayMarkers(getCities())
   addCities()
@@ -81,7 +81,7 @@ const filterCities = cities =>
 const locations = ['toronto', 'montreal']
 
 var map
-function initMap() {
+const initMap = () => {
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 43.653, lng: -79.383 },
     zoom: 8
@@ -95,11 +95,9 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
       location2 +
       '&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ'
   )
-    .then(function(res) {
-      return res.json()
-    })
-    .then(function(json) {
-      var infowindow = new google.maps.InfoWindow({
+    .then(res => res.json())
+    .then(json => {
+      const infowindow = new google.maps.InfoWindow({
         content: `<h6 style="font-weight:bold">${location2} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
       })
 
@@ -109,7 +107,7 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
           map: map,
           animation: google.maps.Animation.DROP
         })
-        marker.addListener('click', function() {
+        marker.addListener('click', () => {
           onCityClick(location)
           infowindow.open(map, marker)
         })
