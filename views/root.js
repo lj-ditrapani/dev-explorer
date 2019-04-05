@@ -80,7 +80,7 @@ const filterCities = cities =>
 const locations = ['toronto', 'montreal']
 
 const initMap = () =>
-  new google.maps.Map(document.getElementById('map'), {
+  new google.maps.Map(document.getElementById('google-map'), {
     center: { lat: 43.653, lng: -79.383 },
     zoom: 8
   })
