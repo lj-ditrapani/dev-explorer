@@ -18,9 +18,10 @@ Load data
 ---------
 
 Login to github; goto settings; generate a personal access token.
-Pass the token as environment variable token:
+Write the token to github-token.txt (don't commit this file!).
+Then run load_data.js with the token passed as an environment variable.
 
-    token=XXX node load_data.js
+    token=`cat github-token.txt` node load_data.js
 
 
 Run
@@ -112,3 +113,13 @@ cities: [
     "url": "https://github.com/RoboDK"
 }
 ```
+
+
+Trouble shooting
+----------------
+
+```
+curl -v --header "Authorization: Bearer `cat github-token.txt`" -X POST --data "@query.json" https://api.github.com/graphql | python -m json.tool
+```
+
+    token=`cat github-token.txt` node test_query.js
