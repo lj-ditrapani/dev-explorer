@@ -1,4 +1,4 @@
-const axios = require('axios')
+const request = require('request-promise-native')
 const R = require('ramda')
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
@@ -7,11 +7,12 @@ const url = 'mongodb://localhost:27017'
 const dbName = 'devexplorer'
 const usernames = require('./users.json')
 
+
 const getUserRepoDetails = username => {
-  return axios
-    .post(
-      'https://api.github.com/graphql',
-      {
+  return request(
+    {
+      uri: 'https://api.github.com/graphql',
+      body: {
         query: `query {
 	user(login: "${username}"){
     avatarUrl
@@ -36,16 +37,13 @@ const getUserRepoDetails = username => {
   }
 }`
       },
-      {
-        headers: {
+      method: 'POST',
+      json: true,
+      headers: {
+          'User-Agent': 'dev-explorer',
           'Content-Type': 'application/json',
           Authorization: `bearer ${process.env.token}`
-        }
       }
-    )
-    .then(response => {
-      assert.equal(response.status, 200)
-      return response.data
     })
 }
 
