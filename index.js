@@ -14,9 +14,6 @@ const setup = client => {
   const db = client.db(dbName)
   const users = db.collection('users')
   const cities = db.collection('cities')
-  app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'))
-  })
   app.get('/cities', getCities(cities))
   app.get('/users', getUsers(users))
   app.get('/city/:name', getCity(cities))
@@ -81,4 +78,4 @@ MongoClient.connect(url)
   .then(setup)
   .catch(e => console.log(e))
 
-app.use(express.static(path.join(__dirname, 'views')))
+app.use(express.static(path.join(__dirname, 'public')))
