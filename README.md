@@ -53,6 +53,7 @@ Endpoints
 /user/:name -> data for user
 /city/:name -> data for city
 
+
 Response Format
 ---------------
 
@@ -78,10 +79,10 @@ cities: [
 ```
 {
     location: toronto,
-    laguages: { java: {byteSize: num, numUsers: num},
+    laguages: { java: {byteSize: number, numUsers: number},
     topLanguage: java,
-    numUsers: num,
-    topUsers: [{..userData}, {...userData}, {}]
+    numUsers: number,
+    topUsers: [{..userData}, {...userData}, ...]
 }
 ```
 
@@ -106,13 +107,3 @@ cities: [
     "url": "https://github.com/RoboDK"
 }
 ```
-
-
-Ideas
------
-
-    loadData.js: load data
-    index.js: actually run express server (readonly)
-              queries mongodb
-
-put index on city
