@@ -1,19 +1,19 @@
 const getCities = () =>
-  $.get('http://localhost:3000/cities')
+  $.get('/cities')
     .fail(() => {
       console.log('error: could not get cities data')
     })
     .then(res => filterCities(res.cities))
 const getCity = city =>
-  $.get(`http://localhost:3000/city/${city}`).fail(() => {
+  $.get(`/city/${city}`).fail(() => {
     console.log('error: could not get city data')
   })
 const getUsers = () =>
-  $.get(`http://localhost:3000/users`).fail(() => {
+  $.get(`/users`).fail(() => {
     console.log('error: could not get users data')
   })
 const getUser = user =>
-  $.get(`http://localhost:3000/user/${user}`).fail(() => {
+  $.get(`/user/${user}`).fail(() => {
     console.log('error: could not get user data')
   })
 
