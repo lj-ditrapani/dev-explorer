@@ -1,5 +1,10 @@
-Evoke 2019 DisruptAI Team 9k
-============================
+Evoke 2019 DisruptAI Hackathon
+==============================
+
+- Team 9k
+- Project: Dev Explorer
+- View programming languages ranked by city and developer.
+
 
 Setup
 -----
