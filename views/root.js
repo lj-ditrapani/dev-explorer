@@ -70,7 +70,7 @@ const addCities = () => {
     console.log(res)
     filterCities(res.cities).map(city => {
       $('#city-list').append(
-        `<li class="collection-item">
+        `<li class="collection-item" id="city-item-${city.location}">
             <div class="collapsible-header">
                 <div id="user-name">
                     <p> Location: ${city.location}</p>
@@ -80,15 +80,15 @@ const addCities = () => {
             </div>
 
             <div class="collapsible-body">
-                <div id="${city.location}">
+                <div id="city-body-${city.location}">
                 </div>
             </div>
         </li>
             `
       )
+      console.log($(`#city-item-${city.location}`))
       $(`#city-item-${city.location}`).click(e => {
-        console.log(e)
-        console.log(city.location)
+        onCityClick(city.location)
       })
     })
   })
@@ -126,51 +126,57 @@ const getLocationsCoords = (location, topLanguage, numUsers) => {
         content: `<h6 style="font-weight:bold">${location2} ~ ${topLanguage}</h6><h6>${numUsers} Users</h6>`
       })
 
-      var marker = new google.maps.Marker({
-        position: json.results[0].geometry.location,
-        map: map,
-        animation: google.maps.Animation.DROP
-      })
-      marker.addListener('click', function() {
-        getCity(location).done(city => {
-          const cityLangs = $(`#${location}`)
-          const rows = Object.entries(city.languages)
-            .sort((a, b) => b[1].numUsers - a[1].numUsers)
-            .map(
-              entry =>
-                `<tr><td> ${entry[0]}</td><td>${entry[1].numUsers}</td><td>${
-                  entry[1].byteSize
-                }</td></tr>`
-            )
-          cityLangs
-            .empty()
-            .append(
-              '<table><tr><th>language</th><th>Users</th><th>Bytes</th></tr>' +
-                rows.join('\n') +
-                '</table>'
-            )
-          const userDiv = $('#city-users')
-          console.log(userDiv)
-          const userRows = city.topUsers.map(
-            user =>
-              `<tr><td><img style="width: 125px" src=${user.avatarUrl}></td><td>${
-                user.login
-              }</td><td>${user.totalSize}</td><td><a href="${user.url}">${
-                user.url
-              }</a></td></tr>`
-          )
-          userDiv
-            .empty()
-            .append(
-              '<table><tr><th>Image</th><th>name</th><th>Bytes</th><th>url</th></tr>' +
-                userRows.join('\n') +
-                '</table>'
-            )
+      if (json.results.length > 0) {
+        const marker = new google.maps.Marker({
+          position: json.results[0].geometry.location,
+          map: map,
+          animation: google.maps.Animation.DROP
         })
-        infowindow.open(map, marker)
-      })
+        marker.addListener('click', function() {
+          onCityClick(location)
+          infowindow.open(map, marker)
+        })
+      }
     })
     .catch(err => console.error(err))
+}
+
+const onCityClick = location => {
+  getCity(location).then(city => {
+    const cityLangs = $(`#city-body-${location}`)
+    const rows = Object.entries(city.languages)
+      .sort((a, b) => b[1].numUsers - a[1].numUsers)
+      .map(
+        entry =>
+          `<tr><td> ${entry[0]}</td><td>${entry[1].numUsers}</td><td>${
+            entry[1].byteSize
+          }</td></tr>`
+      )
+    cityLangs
+      .empty()
+      .append(
+        '<table><tr><th>language</th><th>Users</th><th>Bytes</th></tr>' +
+          rows.join('\n') +
+          '</table>'
+      )
+    const userDiv = $('#city-users')
+    console.log(userDiv)
+    const userRows = city.topUsers.map(
+      user =>
+        `<tr><td><img style="width: 75px" src=${user.avatarUrl}></td><td>${
+          user.login
+        }</td><td>${user.totalSize}</td><td><a href="${user.url}">${
+          user.url
+        }</a></td></tr>`
+    )
+    userDiv
+      .empty()
+      .append(
+        '<table><tr><th>Image</th><th>name</th><th>Bytes</th><th>url</th></tr>' +
+          userRows.join('\n') +
+          '</table>'
+      )
+  })
 }
 
 const displayMarkers = cities => {
