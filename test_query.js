@@ -1,10 +1,11 @@
-const axios = require('axios')
+const request = require('request-promise-native')
+const assert = require('assert')
 
 const getUserRepoDetails = username => {
-  return axios
-    .post(
-      'https://api.github.com/graphql',
-      {
+  return request(
+    {
+      uri: 'https://api.github.com/graphql',
+      body: {
         query: `query {
 	user(login: "${username}"){
     avatarUrl
@@ -29,17 +30,20 @@ const getUserRepoDetails = username => {
   }
 }`
       },
-      {
-        headers: {
+      method: 'POST',
+      json: true,
+      headers: {
+          'User-Agent': 'dev-explorer',
           'Content-Type': 'application/json',
           Authorization: `bearer ${process.env.token}`
-        }
       }
-    )
+    })
     .then(response => {
-      assert.equal(response.status, 200)
-      return response.data
+      return response.data.user
     })
 }
 
-getUserRepoDetails('lj-ditrapani').then(u => console.log(u)).catch(e => console.log(e))
+getUserRepoDetails('tobogdan').then(u => {
+  console.log(u)
+  console.log(u.repositories.nodes[0])
+}).catch(e => console.log(e))

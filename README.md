@@ -115,8 +115,8 @@ cities: [
 ```
 
 
-Trouble shooting
-----------------
+Trouble shooting github requests
+--------------------------------
 
 ```
 curl -v --header "Authorization: Bearer `cat github-token.txt`" -X POST --data "@query.json" https://api.github.com/graphql | python -m json.tool
