@@ -16,8 +16,8 @@ const getUser = user =>
   })
 
 $(document).ready(() => {
-  initMap()
-  displayMarkers(getCities())
+  const googleMap = initMap()
+  displayMarkers(googleMap, getCities())
   addCities()
   addUsers()
   $('.collapsible').collapsible()
@@ -80,15 +80,13 @@ const filterCities = cities =>
 
 const locations = ['toronto', 'montreal']
 
-var googleMap
-const initMap = () => {
-  googleMap = new google.maps.Map(document.getElementById('map'), {
+const initMap = () =>
+  new google.maps.Map(document.getElementById('map'), {
     center: { lat: 43.653, lng: -79.383 },
     zoom: 8
   })
-}
 
-const getLocationsCoords = (location, topLanguage, numUsers) => {
+const getLocationsCoords = (googleMap, location, topLanguage, numUsers) => {
   const location2 = location + ', On'
   fetch(
     'https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -153,16 +151,10 @@ const onCityClick = location => {
   })
 }
 
-const displayMarkers = cities => {
+const displayMarkers = (googleMap, cities) => {
   cities.then(res => {
     filterCities(res.cities).forEach(city => {
-      getLocationsCoords(city.location, city.topLanguage, city.numUsers)
+      getLocationsCoords(googleMap, city.location, city.topLanguage, city.numUsers)
     })
-  })
-}
-
-const deprecated = () => {
-  locations.forEach(address => {
-    getLocationsCoords(address)
   })
 }
