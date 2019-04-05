@@ -1,5 +1,3 @@
-// var DATA = require('./constants');
-
 const getCities = () =>
   $.get('http://localhost:3000/cities').fail(() => {
     console.log('error: could not get cities data')
@@ -18,7 +16,6 @@ const getUser = user =>
   })
 
 $(document).ready(function() {
-  console.log('ready!')
   initMap()
   displayMarkers(getCities())
   addCities()
@@ -47,7 +44,6 @@ $(document).ready(function() {
 
 const addCities = () => {
   getCities().then(res => {
-    console.log(res)
     filterCities(res.cities).map(city => {
       $('#city-list').append(
         `<li class="collection-item" id="city-item-${city.location}">
@@ -66,7 +62,6 @@ const addCities = () => {
         </li>
             `
       )
-      console.log($(`#city-item-${city.location}`))
       $(`#city-item-${city.location}`).click(e => {
         onCityClick(city.location)
       })
@@ -142,7 +137,6 @@ const onCityClick = location => {
           '</table>'
       )
     const userDiv = $('#city-users')
-    console.log(userDiv)
     const userRows = city.topUsers.map(
       user =>
         `<tr><td><img style="width: 75px" src=${user.avatarUrl}></td><td>${
