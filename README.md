@@ -23,6 +23,11 @@ Then run load_data.js with the token passed as an environment variable.
 
     token=`cat github-token.txt` node load_data.js
 
+To see the map data, you need a google key.
+Login to google maps api and get a javascript maps API key.
+Write it to a file called public/google-maps-key.txt.
+You'll need to provide credit card details to google to get the key.
+
 
 Run
 ---
