@@ -9,7 +9,7 @@ const getCity = city =>
     console.log('error: could not get city data')
   })
 const getUsers = () =>
-  $.get(`/users`).fail(() => {
+  $.get('/users').fail(() => {
     console.log('error: could not get users data')
   })
 const getUser = user =>
@@ -18,14 +18,28 @@ const getUser = user =>
   })
 
 $(document).ready(() => {
+  $.get('/google-maps-key.txt').then(str => setGoogleMapsScript(str.trim()))
+})
+
+window.devExplorerSetup = () => {
   const googleMap = initMap()
-  getCities().then(cities => {
-    displayMarkers(googleMap, cities)
+  Promise.all([$.get('/google-maps-key.txt'), getCities()]).then(pair => {
+    const [str, cities] = pair
+    const key = str.trim()
+    displayMarkers(key, googleMap, cities)
     addCities(cities)
   })
   $('.collapsible').collapsible()
   $('#userSearch').on('keypress', onUserSearch)
-})
+}
+
+const setGoogleMapsScript = key => {
+  const googleMapScript =
+    '<script async defer src="https://maps.googleapis.com/maps/api/js?key=' +
+    key +
+    '&callback=devExplorerSetup" type="text/javascript"></script>'
+  $('head').append(googleMapScript)
+}
 
 const onUserSearch = e => {
   if (e.which === 13) {
@@ -85,12 +99,13 @@ const initMap = () =>
     zoom: 8
   })
 
-const getLocationsCoords = (googleMap, location, topLanguage, numUsers) => {
+const getLocationsCoords = (key, googleMap, location, topLanguage, numUsers) => {
   const location2 = location + ', On'
   fetch(
     'https://maps.googleapis.com/maps/api/geocode/json?address=' +
       location2 +
-      '&key=AIzaSyDIugBS6uYAKtUfNwqn7gqL6JnlIpAKeSQ'
+      '&key=' +
+      key
   )
     .then(res => res.json())
     .then(json => {
@@ -100,6 +115,8 @@ const getLocationsCoords = (googleMap, location, topLanguage, numUsers) => {
           `${location2} ~ ${topLanguage}` +
           `</h6><h6>${numUsers} Users</h6>`
       })
+
+      console.log(json)
 
       if (json.results.length > 0) {
         const marker = new google.maps.Marker({
@@ -153,8 +170,8 @@ const onCityClick = location => {
   })
 }
 
-const displayMarkers = (googleMap, cities) => {
+const displayMarkers = (key, googleMap, cities) => {
   cities.forEach(city => {
-    getLocationsCoords(googleMap, city.location, city.topLanguage, city.numUsers)
+    getLocationsCoords(key, googleMap, city.location, city.topLanguage, city.numUsers)
   })
 }
