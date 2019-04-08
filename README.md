@@ -136,6 +136,17 @@ Screen shots
 ------------
 
 ![Initial view](screen-shots/init.png?raw=true "Initial view")
+
+*Initial View*
+
 ![Top Developers per City](screen-shots/top-developers.png?raw=true "Top Developers per City")
+
+*Top Developers per City*
+
 ![Top Languages per City](screen-shots/init.png?raw=true "Top Languages per City")
+
+*Top Languages per City*
+
 ![Top Languages per Developer](screen-shots/init.png?raw=true "Top Languages per Developer")
+
+*Top Languages per Developer*
