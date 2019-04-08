@@ -25,6 +25,8 @@ Then run load_data.js with the token passed as an environment variable.
 
 To see the map data, you need a google key.
 Login to google maps api and get a javascript maps API key.
+Enable the javascript maps API and the geocoding API.
+Restrict the key to only use these 2 APIs.
 Write it to a file called public/google-maps-key.txt.
 You'll need to provide credit card details to google to get the key.
 
@@ -128,3 +130,12 @@ curl -v --header "Authorization: Bearer `cat github-token.txt`" -X POST --data "
 ```
 
     token=`cat github-token.txt` node test_query.js
+
+
+Screen shots
+------------
+
+![Initial view](screen-shots/init.png?raw=true "Initial view")
+![Top Developers per City](screen-shots/top-developers.png?raw=true "Top Developers per City")
+![Top Languages per City](screen-shots/init.png?raw=true "Top Languages per City")
+![Top Languages per Developer](screen-shots/init.png?raw=true "Top Languages per Developer")
