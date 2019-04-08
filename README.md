@@ -143,10 +143,10 @@ Screen shots
 
 *Top Developers per City*
 
-![Top Languages per City](screen-shots/init.png?raw=true "Top Languages per City")
+![Top Languages per City](screen-shots/city-languages.png?raw=true "Top Languages per City")
 
 *Top Languages per City*
 
-![Top Languages per Developer](screen-shots/init.png?raw=true "Top Languages per Developer")
+![Top Languages per Developer](screen-shots/developer-languages.png?raw=true "Top Languages per Developer")
 
 *Top Languages per Developer*
