@@ -61,10 +61,10 @@ Fix your crappy formatting
 
 Endpoints
 ---------
-/cities -> city names
-/users -> user names
-/user/:name -> data for user
-/city/:name -> data for city
+- /cities -> city names
+- /users -> user names
+- /user/:name -> data for user
+- /city/:name -> data for city
 
 
 Response Format
